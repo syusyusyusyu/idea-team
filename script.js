@@ -6,6 +6,11 @@ const memberInput = document.getElementById("member");
 const mentorInput = document.getElementById("mentor");
 const resultDiv = document.getElementById('resultDiv');
 
+function getRandomElement(arr) {
+    const index = Math.floor(Math.random() * arr.length);
+    return arr.splice(index, 1)[0];
+}
+
 teamForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -22,8 +27,8 @@ teamForm.addEventListener("submit", function (event) {
 
     resultDiv.innerHTML = '';
     leaders.forEach((leader, i) => {
-        const member = members[i] ? members[i] : 'なし';
-        const mentor = mentors[i] ? mentors[i] : 'なし';
+        const member = getRandomElement(members) || 'なし';
+        const mentor = getRandomElement(mentors) || 'なし';
         resultDiv.innerHTML += `
             <h2>チーム${i + 1}</h2>
             <p><strong>リーダー:</strong> ${leader}</p>
