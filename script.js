@@ -1,48 +1,42 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const teamForm = document.getElementById("teamForm");
-    const teamButton = document.getElementById("teamButton");
-    const leaderInput = document.getElementById("leader");
-    const memberInput = document.getElementById("member");
-    const mentorInput = document.getElementById("mentor");
+let allMembers = [];
 
-    const resultDiv = document.getElementById('resultDiv');
+const teamForm = document.getElementById("teamForm");
+const teamButton = document.getElementById("teamButton");
+const leaderInput = document.getElementById("leader");
+const memberInput = document.getElementById("member");
+const mentorInput = document.getElementById("mentor");
+const resultDiv = document.getElementById('resultDiv');
+
+teamButton.addEventListener("click", function () {
+    const leader = leaderInput.value;
+    const members = memberInput.value.split('\n');
+    const mentor = mentorInput.value;
+
+    if (allMembers.includes(leader)) {
+        alert("リーダーは既に他のチームのメンバーです");
+        return;
+    }
+
+    for (let i = 0; i < members.length; i++) {
+        if (allMembers.includes(members[i])) {
+            alert("一人以上のメンバーが既に他のチームのメンバーです");
+            return;
+        }
+    }
+
+    if (allMembers.includes(mentor)) {
+        alert("メンターは既に他のチームのメンバーです");
+        return;
+    }
+
+    allMembers.push(leader);
+    allMembers = allMembers.concat(members);
+    allMembers.push(mentor);
+
     resultDiv.innerHTML = `
         <h2>チーム情報</h2>
-        <p><strong>リーダー:</strong> ${leaderInput.value}</p>
-        <p><strong>メンバー:</strong> ${memberInput.value}</p>
-        <p><strong>メンター:</strong> ${mentorInput.value}</p>
+        <p><strong>リーダー:</strong> ${leader}</p>
+        <p><strong>メンバー:</strong> ${members.join(', ')}</p>
+        <p><strong>メンター:</strong> ${mentor}</p>
     `;
-
-    teamForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-    });
-
-    teamButton.addEventListener("click", function () {
-        const leaders = leaderInput.value.trim().split('\n');
-        const members = memberInput.value.trim().split('\n');
-        const mentors = mentorInput.value.trim().split('\n');
-
-        const teams = [];
-        for (let i = 0; i < leaders.length; i++) {
-            teams[i] = {
-                leader: leaders[i],
-                members: [],
-                mentor: mentors[i % mentors.length]
-            };
-        }
-
-        for (let i = 0; i < members.length; i++) {
-            teams[i % teams.length].members.push(members[i]);
-        }
-
-        let output = '';
-        teams.forEach((team, index) => {
-            output += `チーム${index + 1}:\n`;
-            output += `リーダー: ${team.leader}\n`;
-            output += `メンバー: ${team.members.join(', ')}\n`;
-            output += `メンター: ${team.mentor}\n\n`;
-        });
-
-        resultDiv.textContent = output;
-    });
 });
