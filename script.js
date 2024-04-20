@@ -8,12 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const resultDiv = document.getElementById('resultDiv');
     resultDiv.innerHTML = `
         <h2>チーム情報</h2>
-        <p><strong>リーダー:</strong> ${leader}</p>
-        <p><strong>メンバー:</strong> ${member}</p>
-        <p><strong>メンター:</strong> ${mentor}</p>
+        <p><strong>リーダー:</strong> ${leaderInput.value}</p>
+        <p><strong>メンバー:</strong> ${memberInput.value}</p>
+        <p><strong>メンター:</strong> ${mentorInput.value}</p>
     `;
 
-    // フォームの送信を防ぐ
     teamForm.addEventListener("submit", function (event) {
         event.preventDefault();
     });
