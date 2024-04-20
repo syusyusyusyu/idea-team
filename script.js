@@ -22,11 +22,13 @@ teamForm.addEventListener("submit", function (event) {
 
     resultDiv.innerHTML = '';
     leaders.forEach((leader, i) => {
+        const member = members[i] ? members[i] : 'なし';
+        const mentor = mentors[i] ? mentors[i] : 'なし';
         resultDiv.innerHTML += `
             <h2>チーム${i + 1}</h2>
             <p><strong>リーダー:</strong> ${leader}</p>
-            <p><strong>メンバー:</strong> ${members[Math.floor(Math.random() * members.length)]}</p>
-            <p><strong>メンター:</strong> ${mentors[Math.floor(Math.random() * mentors.length)]}</p>
+            <p><strong>メンバー:</strong> ${member}</p>
+            <p><strong>メンター:</strong> ${mentor}</p>
         `;
     });
 });
