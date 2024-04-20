@@ -1,7 +1,6 @@
 let allMembers = [];
 
 const teamForm = document.getElementById("teamForm");
-const teamButton = document.getElementById("teamButton");
 const leaderInput = document.getElementById("leader");
 const memberInput = document.getElementById("member");
 const mentorInput = document.getElementById("mentor");
@@ -10,21 +9,24 @@ const resultDiv = document.getElementById('resultDiv');
 teamForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const leader = leaderInput.value;
+    const leaders = leaderInput.value.split('\n');
     const members = memberInput.value.split('\n');
-    const mentor = mentorInput.value;
+    const mentors = mentorInput.value.split('\n');
 
-    if (allMembers.includes(leader) || members.some(member => allMembers.includes(member)) || allMembers.includes(mentor)) {
+    if (allMembers.some(member => leaders.includes(member) || members.includes(member) || mentors.includes(member))) {
         alert("一人以上のメンバーが既に他のチームのメンバーです");
         return;
     }
 
-    allMembers.push(leader, ...members, mentor);
+    allMembers.push(...leaders, ...members, ...mentors);
 
-    resultDiv.innerHTML = `
-        <h2>チーム情報</h2>
-        <p><strong>リーダー:</strong> ${leader}</p>
-        <p><strong>メンバー:</strong> ${members.join(', ')}</p>
-        <p><strong>メンター:</strong> ${mentor}</p>
-    `;
+    resultDiv.innerHTML = '';
+    leaders.forEach((leader, i) => {
+        resultDiv.innerHTML += `
+            <h2>チーム${i + 1}</h2>
+            <p><strong>リーダー:</strong> ${leader}</p>
+            <p><strong>メンバー:</strong> ${members[Math.floor(Math.random() * members.length)]}</p>
+            <p><strong>メンター:</strong> ${mentors[Math.floor(Math.random() * mentors.length)]}</p>
+        `;
+    });
 });
