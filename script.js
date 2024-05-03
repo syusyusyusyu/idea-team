@@ -4,6 +4,15 @@ const teamForm = document.getElementById("teamForm");
 const leaderInput = document.getElementById("leader");
 const memberInput = document.getElementById("member");
 const mentorInput = document.getElementById("mentor");
+const submitButton = document.getElementById("submitButton");
+
+submitButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (leaderInput.value === "" || memberInput.value === "" || mentorInput.value === "") {
+        return;
+    }
+    // Rest of the code...
+});
 const resultDiv = document.getElementById('resultDiv');
 
 function getRandomElement(arr) {
